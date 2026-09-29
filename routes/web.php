@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 // Jalur 1: Halaman Katalog (Awal)
-Route::get('/', function () {
-    return view('katalog');
-});
+Route::get('/', [ProductController::class, 'index']);
 
 // Jalur 2: Halaman Detail Produk
 Route::get('/detail', function () {

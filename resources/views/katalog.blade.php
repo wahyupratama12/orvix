@@ -1,20 +1,38 @@
 @extends('layouts.master')
 
 @section('konten_utama')
-    <h2 style="color: #333; margin-bottom: 20px;">Katalog Produk</h2>
+    <h2>Katalog Produk</h2>
 
-    <!-- KOTAK PRODUK -->
-    <!-- Ganti width: 250px sesuai ukuran W (Width) di Figma kalian -->
-    <div style="background-color: white; border: 1px solid #ccc; width: 250px; padding: 15px; border-radius: 8px;">
-        <img src="{{ asset('assets/produk.jpg') }}" alt="Foto Produk"
-            style="width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px;">
-        <h3 style="margin-top: 15px;">Nama Sepatu/Baju</h3>
-        <p style="color: #E63946; font-weight: bold; font-size: 18px;">Rp 150.000</p>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <!-- BUKA MESIN LOOPING -->
+        @forelse ($products as $product)
+            <!-- DESAIN KOTAK PRODUK -->
+            <div style="background-color: white; border: 1px solid #ccc; width: 250px; padding: 15px; border-radius: 8px;">
 
-        <!-- Pintu menuju halaman Detail -->
-        <a href="/detail"
-            style="display: block; text-align: center; background-color: #0B5ED7; color: white; padding: 10px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-            Lihat Detail
-        </a>
+                @if ($product->image)
+                    <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                        style="width: 100%; height: 200px; object-fit: cover; border-radius: 5px;">
+                @else
+                    <div style="background:#eee; height:150px; text-align:center; line-height: 150px;">Tanpa Gambar</div>
+                @endif
+
+                <!-- NAMA PRODUK -->
+                <h3 style="margin-top: 15px;">{{ $product->name }}</h3>
+
+                <!-- HARGA PRODUK (Format Rupiah) -->
+                <p style="color: red; font-weight: bold;">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+
+                <!-- TOMBOL DETAIL -->
+                <a href="/detail"
+                    style="display: block; text-align: center; background-color: #0B5ED7; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Lihat
+                    Detail</a>
+            </div>
+        @empty
+            <!-- TAMPILAN JIKA DATABASE KOSONG (EMPTY STATE) -->
+            <div style="text-align: center; width: 100%; padding: 50px;">
+                <h3 style="color: #888;">Mohon maaf, produk belum tersedia di etalase kami.</h3>
+            </div>
+        @endforelse
+        <!-- TUTUP MESIN LOOPING -->
     </div>
 @endsection

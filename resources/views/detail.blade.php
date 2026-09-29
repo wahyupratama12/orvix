@@ -10,7 +10,7 @@
             style="width: 400px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px;">
         <!-- Spesifikasi Kanan -->
         <div style="width: 60%; padding-left: 30px;">
-            <h2>Nama Sepatu/Baju</h2>
+            <h2>Celana Baggy</h2>
             <h3 style="color: #E63946;">Rp 150.000</h3>
             <p><strong>Spesifikasi:</strong></p>
             <ul>
