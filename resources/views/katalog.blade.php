@@ -23,7 +23,7 @@
                 <p style="color: red; font-weight: bold;">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
 
                 <!-- TOMBOL DETAIL -->
-                <a href="/detail"
+                <a href="{{ route('detail', ['product' => $product->id]) }}"
                     style="display: block; text-align: center; background-color: #0B5ED7; color: white; padding: 10px; text-decoration: none; border-radius: 5px;">Lihat
                     Detail</a>
             </div>

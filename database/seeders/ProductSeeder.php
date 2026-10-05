@@ -8,7 +8,7 @@ use App\Models\Product;
 class ProductSeeder extends Seeder
 {
     public function run(): void
-    {
+    { 
         Product::create([
             'name' => 'Sepatu Sneakers Casual',
             'description' => 'Sepatu ringan cocok untuk nongkrong dan daily wear.',

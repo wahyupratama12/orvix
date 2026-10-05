@@ -17,7 +17,8 @@
             </div>
 
             <hr style="margin: 20px 0;">
-            <h3 style="text-align: right;">Total Bayar: <span style="color: #E63946;">Rp 150.000</span></h3>
+            <h3 style="text-align: right;">Total Bayar: <span
+                    style="color: #E63946;">Rp {{ number_format($product->price, 0, ',', '.') }}</span></h3>
 
             <!-- Tombol Konfirmasi -->
             <button type="submit" style="background-color: #FFC107; color: black; padding: 15px; width: 100%; border: none; border-radius: 5px; font-weight: bold; font-size: 16px; cursor: pointer;">

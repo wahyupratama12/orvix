@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>E-Commerce Kelas XII</title>
+    <title>OrVix</title>
 </head>
 
 <body style="font-family: Arial, sans-serif; margin: 0; background-color: #f4f4f9;">
@@ -26,7 +26,7 @@
 
     <!-- 3. FOOTER (Bingkai Bawah) -->
     <footer style="background-color: #ddd; padding: 20px; text-align: center;">
-        <p style="margin: 0;">&copy; 2026 Hak Cipta Dilindungi - SMK Plus Pelita Nusantara</p>
+        <p style="margin: 0;">&copy; 2026 OrVix</p>
     </footer>
 
 </body>

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product; // Panggil Model Product
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -12,5 +11,15 @@ class ProductController extends Controller
         $products = Product::all();
 
         return view('katalog', compact('products'));
+    }
+
+    public function show(Product $product)
+    {
+        return view('detail', compact('product'));
+    }
+
+    public function checkout(Product $product)
+    {
+        return view('checkout', compact('product'));
     }
 }
