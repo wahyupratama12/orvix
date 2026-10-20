@@ -1,37 +1,47 @@
 @extends('layouts.master')
-
 @section('konten_utama')
-    <a href="{{ route('katalog') }}" style="color: #0B5ED7; text-decoration: none; font-weight: bold;">&larr; Kembali ke Katalog</a>
+    <!-- 1. FITUR BREADCRUMB NAVIGATION (Standar Industri E-Commerce) -->
+    <!-- Mencegah Dead-End dan memandu orientasi pengguna -->
+    <div style="margin-bottom: 25px; font-size: 14px; color: #666;">
+        <a href="/" style="color: #0B5ED7; text-decoration: none;">Katalog
+            Utama</a>
+        <span style="margin: 0 10px;">/</span>
+        <span style="color: #333; font-weight: bold;">{{ $product->name }}</span>
+    </div>
 
     <div
-        style="display: flex; margin-top: 20px; background-color: white; padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
-        <!-- Gambar Kiri (mengambil gambar produk yang dipilih) -->
-        @if ($product->image)
-            <img src="{{ $product->image }}" alt="{{ $product->name }}"
-                style="width: 400px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 4px;">
-        @else
-            <div
-                style="width: 400px; aspect-ratio: 3 / 4; background: #eee; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #888;">
-                Tanpa Gambar
-            </div>
-        @endif
-        <!-- Spesifikasi Kanan -->
-        <div style="width: 60%; padding-left: 30px;">
-            <h2>{{ $product->name }}</h2>
-            <h3 style="color: #E63946;">Rp {{ number_format($product->price, 0, ',', '.') }}</h3>
-            <p><strong>Spesifikasi:</strong></p>
-            <ul>
-                <li>Bahan: Material Premium</li>
-                <li>Ukuran tersedia: Sesuaikan produk kalian</li>
-                <li>Kondisi: Baru 100%</li>
-            </ul>
-            <p>Deskripsi: {{ $product->description }}</p>
+        style="display: flex; margin-top: 20px; background-color: white;
+padding: 20px; border-radius: 8px; border: 1px solid #ccc;">
 
-            <!-- Pintu menuju halaman Checkout -->
-            <a href="{{ route('checkout', ['product' => $product->id]) }}"
-                style="display: inline-block; background-color: #28A745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 20px;">
-                Beli Sekarang
-            </a>
+        <!-- BAGIAN KIRI: GAMBAR PRODUK -->
+        <div style="width: 40%; text-align: center;">
+            @if ($product->image)
+                <img src="{{ $product->image }}" alt="{{ $product->name }}"
+                    style="width: 100%; height: 400px; object-fit: cover; border-radius: 5px;">
+            @else
+                <div style="background:#eee; height:150px; text-align:center; line-height: 150px;">Tanpa Gambar</div>
+            @endif
         </div>
-    </div>
-@endsection
+        <!-- BAGIAN KANAN: SPESIFIKASI DARI DATABASE -->
+        <div style="width: 60%; padding-left: 40px;">
+            <h1 style="margin-top: 0; font-size: 28px;">{{ $product->name }}</h1>
+
+            <h2 style="color: #E63946; border-bottom: 1px solid #eee;
+padding-bottom: 15px;">
+                Rp {{ number_format($product->price, 0, ',', '.') }}
+            </h2>
+            <p style="font-weight: bold;">Spesifikasi & Deskripsi:</p>
+            <div style="line-height: 1.6; color: #555; text-align: justify;">
+                <!-- nl2br untuk membaca format spasi 'Enter' dari database -
+                                                    ->
+                                                     {!! nl2br(e($product->description)) !!}
+                                                     </div>
+
+                                                     <!-- Tombol Keranjang: Bawa ID Produk untuk P7 Nanti -->
+                <a href="/checkout/{{ $product->id }}"
+                    style="display: inlineblock; background-color: #28A745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    + Masukkan Keranjang
+                </a>
+            </div>
+        </div>
+    @endsection

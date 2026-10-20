@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product; // Panggil Model Product
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -13,8 +13,11 @@ class ProductController extends Controller
         return view('katalog', compact('products'));
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
+        // Mengambil data produk berdasarkan ID, jika tidak ada akan otomatis melempar 404
+        $product = Product::findOrFail($id);
+
         return view('detail', compact('product'));
     }
 
