@@ -8,12 +8,16 @@ Route::get('/', [ProductController::class, 'index'])->name('katalog');
 
 Route::get('/detail/{id}', [ProductController::class, 'show'])->name('product.detail');
 
-// Jalur 2: Halaman Detail Produk (ambil produk berdasarkan id di URL)
+Route::get('/checkout/{id}', [ProductController::class, 'checkout']);
+
+Route::post('/checkout/proses', [ProductController::class, 'storeTransaction']);
+
+Route::get('/berhasil/{id}', [ProductController::class, 'success']);
+
 Route::get('/detail/{product}', [ProductController::class, 'show'])
     ->whereNumber('product')
     ->name('detail');
 
-// Jalur 3: Halaman Checkout (produk yang dipilih dari halaman detail)
 Route::get('/checkout/{product}', [ProductController::class, 'checkout'])
     ->whereNumber('product')
     ->name('checkout');

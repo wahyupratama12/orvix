@@ -33,14 +33,14 @@ padding-bottom: 15px;">
             <p style="font-weight: bold;">Spesifikasi & Deskripsi:</p>
             <div style="line-height: 1.6; color: #555; text-align: justify;">
                 <!-- nl2br untuk membaca format spasi 'Enter' dari database -
-                                                    ->
-                                                     {!! nl2br(e($product->description)) !!}
-                                                     </div>
+                                                                                ->
+                                                                                 {!! nl2br(e($product->description)) !!}
+                                                                                 </div>
 
-                                                     <!-- Tombol Keranjang: Bawa ID Produk untuk P7 Nanti -->
+                                                                                 <!-- Tombol Keranjang: Bawa ID Produk untuk P7 Nanti -->
                 <a href="/checkout/{{ $product->id }}"
                     style="display: inlineblock; background-color: #28A745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                    + Masukkan Keranjang
+                    checkout
                 </a>
             </div>
         </div>
