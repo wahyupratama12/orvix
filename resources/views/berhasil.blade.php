@@ -10,7 +10,6 @@
                 sedang kami proses.</p>
         </div>
 
-        <!-- RINCIAN INVOICE DARI TABEL TRANSACTIONS MYSQL -->
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 15px;">
             <tr>
                 <td style="padding: 8px 0; color: #666;">Nomor Resi / Invoice:</td>
@@ -43,10 +42,19 @@
             <tr>
                 <td style="padding: 8px 0; color: #666;">Status Pesanan:</td>
                 <td style="padding: 8px 0; text-align: right;">
-                    <span
-                        style="background-color: #fff3cd; color: #856404; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 13px;">
-                        {{ $transaction->status }}
-                    </span>
+                    @if($transaction->status == 'Pending')
+                        <span style="background-color: #fff3cd; color: #856404; padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 13px;">
+                            ⏳ Pending (Menunggu Konfirmasi Admin)
+                        </span>
+                    @elseif($transaction->status == 'Paid')
+                        <span style="background-color: #cfe2ff; color: #084298; padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 13px;">
+                            💳 Paid (Pembayaran Lunas - Sedang Dikemas)
+                        </span>
+                    @elseif($transaction->status == 'Shipped')
+                        <span style="background-color: #d1e7dd; color: #0f5132; padding: 5px 12px; border-radius: 4px; font-weight: bold; font-size: 13px;">
+                            🚚 Shipped (Pesanan Sedang Dikirim Kurir)
+                        </span>
+                    @endif
                 </td>
             </tr>
             <tr style="border-top: 2px solid #eee;">

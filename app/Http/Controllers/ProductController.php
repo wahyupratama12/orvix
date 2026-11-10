@@ -8,71 +8,82 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    // FUNGSI 1: Menampilkan seluruh produk di Katalog (P5)
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $query = Product::query();
+
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('name', 'LIKE', '%'.$keyword.'%')
+                    ->orWhere('description', 'LIKE', '%'.$keyword.'%');
+            });
+        }
+
+        if ($request->sort == 'termurah') {
+            $query->orderBy('price', 'asc');
+        } elseif ($request->sort == 'termahal') {
+            $query->orderBy('price', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->get();
+
         return view('katalog', compact('products'));
     }
 
-    // FUNGSI 2: Menampilkan 1 produk spesifik di halaman Detail (P6)[cite: 8]
     public function show($id)
     {
         $product = Product::findOrFail($id);
+
         return view('detail', compact('product'));
     }
 
-    // FUNGSI 3: Menampilkan halaman Form Checkout dengan membawa data barang yang dipilih (P7)[cite: 8]
     public function checkout($id)
     {
         $product = Product::findOrFail($id);
+
         return view('checkout', compact('product'));
     }
 
-    // FUNGSI 4: Menangkap kiriman Form (POST), menghitung total, dan menyimpan ke MySQL (P7)[cite: 8, 9]
     public function storeTransaction(Request $request)
     {
-        // A. Cari data produk asli di database berdasarkan product_id yang dikirim form[cite: 9]
         $product = Product::findOrFail($request->product_id);
 
-        // B. Tentukan tarif ongkos kirim otomatis berdasarkan pilihan kurir[cite: 9]
-        $shipping_cost = 15000; // Tarif dasar JNE Reguler[cite: 9]
+        $shipping_cost = 15000;
         if ($request->courier == 'J&T Express') {
             $shipping_cost = 20000;
         } elseif ($request->courier == 'SiCepat BEST') {
             $shipping_cost = 25000;
         }
 
-        // C. Hitung Total Bayar: (Harga Produk x Jumlah Beli) + Ongkos Kirim[cite: 9]
         $subtotal = $product->price * $request->quantity;
         $total_amount = $subtotal + $shipping_cost;
 
-        // D. Buat kode Invoice unik otomatis (Contoh: INV-2026-4829)[cite: 9]
-        $invoice_code = 'INV-2026-' . rand(1000, 9999);
+        $invoice_code = 'INV-2026-'.rand(1000, 9999);
 
-        // E. Simpan (INSERT) seluruh data transaksi ke dalam tabel MySQL[cite: 9]
         $transaction = Transaction::create([
-            'invoice_code'     => $invoice_code,
-            'product_id'       => $product->id,
-            'product_name'     => $product->name,
-            'customer_name'    => $request->customer_name,
-            'customer_phone'   => $request->customer_phone,
+            'invoice_code' => $invoice_code,
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'customer_name' => $request->customer_name,
+            'customer_phone' => $request->customer_phone,
             'customer_address' => $request->customer_address,
-            'courier'          => $request->courier,
-            'quantity'         => $request->quantity,
-            'shipping_cost'    => $shipping_cost,
-            'total_amount'     => $total_amount,
-            'status'           => 'Pending',
+            'courier' => $request->courier,
+            'quantity' => $request->quantity,
+            'shipping_cost' => $shipping_cost,
+            'total_amount' => $total_amount,
+            'status' => 'Pending',
         ]);
 
-        // F. Arahkan pembeli menuju halaman Berhasil sambil membawa ID transaksi barunya[cite: 9]
-        return redirect('/berhasil/' . $transaction->id);
+        return redirect('/berhasil/'.$transaction->id);
     }
 
-    // FUNGSI 5: Menampilkan halaman Invoice Berhasil berdasarkan ID Transaksi (P7)[cite: 9]
     public function success($id)
     {
         $transaction = Transaction::findOrFail($id);
+
         return view('berhasil', compact('transaction'));
     }
 }
